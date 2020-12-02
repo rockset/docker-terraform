@@ -1,6 +1,6 @@
 FROM alpine
 
-ARG TERRAFORM_VERSION=0.13.2
+ARG TERRAFORM_VERSION=0.13.5
 ARG AWS_SM_ENV_VERSION=0.1.1
 
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
