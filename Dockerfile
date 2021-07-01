@@ -1,14 +1,15 @@
 FROM alpine
 
-ARG TERRAFORM_VERSION=0.13.5
 ARG AWS_SM_ENV_VERSION=0.1.1
 
-RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip && \
-    mv terraform /usr/local/bin
+RUN apk update && apk add ca-certificates curl git libc6-compat && update-ca-certificates
 
-RUN apk update && apk add ca-certificates git && update-ca-certificates
+RUN curl -L https://raw.githubusercontent.com/warrensbox/terraform-switcher/release/install.sh | sh
+
+RUN tfswitch 0.13.5 && \
+    tfswitch 0.13.7 && \
+    tfswitch 1.0.0 && \
+    tfswitch 1.0.1
 
 RUN wget https://github.com/rockset/aws-sm-env/releases/download/v${AWS_SM_ENV_VERSION}/aws-sm-env && \
     chmod 755 /aws-sm-env
